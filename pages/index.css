@@ -1,0 +1,5 @@
+@import url(../vendor/normalize.css); /* Файл normalize.css */
+
+@import url(../vendor/fonts/fonts.css); /* шрифты */
+
+@import url(../); /* общий файл */
