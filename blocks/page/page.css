@@ -1,0 +1,9 @@
+.page {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  box-sizing: border-box;
+  background: #000;
+  color: #ffffff;
+  padding: 0;
+}
