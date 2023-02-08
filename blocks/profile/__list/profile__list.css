@@ -1,4 +1,4 @@
-.profile_container {
+.profile__list {
   width: 100%;
   max-width: 486px;
   padding: 0;
@@ -8,7 +8,7 @@
   list-style: none;
 }
 @media screen and (max-width: 768px) {
-  .profile_container {
+  .profile__list {
     display: flex;
     flex-direction: column;
     gap: 23px;

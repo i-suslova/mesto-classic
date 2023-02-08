@@ -1,5 +1,5 @@
-.profile_title {
-  grid-area: profile_title;
+.profile__title {
+  grid-area: profile__title;
   font-weight: 500;
   font-size: 42px;
   line-height: 114%; /* or 48px*/
@@ -8,7 +8,7 @@
 }
 
 @media screen and (max-width: 640px) {
-  .profile_title {
+  .profile__title {
     font-size: 27px;
     line-height: 33px;
     text-align: center;

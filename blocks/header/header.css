@@ -2,9 +2,7 @@
   width: 100%;
   max-width: 880px;
   margin: 0 auto;
-
   border-bottom: 1px solid #545454;
-  outline: 3px solid red;
 }
 
 @media screen and (max-width: 768px) {

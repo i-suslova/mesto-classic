@@ -1,4 +1,4 @@
-.profile_info {
+.profile__info {
   margin: 0 auto;
   width: 100%;
   max-width: 336px;
@@ -6,21 +6,21 @@
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-areas:
-    "profile_title profile_button-edit"
-    "profile_subtitle .";
+    "profile__title profile__button-edit"
+    "profile__subtitle .";
   align-items: center;
   justify-items: start;
 }
 
 @media screen and (max-width: 640px) {
-  .profile_info {
+  .profile__info {
     max-width: 246px;
     margin: 0;
     margin-bottom: 34px;
     grid-template-columns: 15px 1fr auto auto;
     grid-template-areas:
-      ". profile_title  profile_button-edit ."
-      ". profile_subtitle . .";
+      ". profile__title  profile__button-edit ."
+      ". profile__subtitle . .";
     justify-items: center;
   }
 }
