@@ -26,7 +26,7 @@
             <li class="profile__info">
               <h1 class="profile__title">Жак-Ив Кусто</h1>
               <p class="profile__subtitle">Исследователь океана</p>
-              <button class="profile__button-edit" type="button">
+              <button class="profile__button-edit hover">
                 <img
                   src="./images/VectorEdit.svg"
                   alt="кнопка редактирования"
@@ -34,7 +34,7 @@
               </button>
             </li>
           </ul>
-          <button class="profile__button-add" type="button">
+          <button class="profile__button-add hover">
             <img src="./images/VectorPlus.svg" alt="кнопка добавления" />
           </button>
         </div>
@@ -47,7 +47,7 @@
               class="element__photo"
             />
             <h2 class="element__title">Карачаевск</h2>
-            <img src="./images/like.svg" alt="значок лайка" />
+            <button class="element__button-like"></button>
           </article>
           <article class="element">
             <img
@@ -56,7 +56,7 @@
               class="element__photo"
             />
             <h2 class="element__title">Гора Эльбрус</h2>
-            <img src="./images/like.svg" alt="значок лайка" />
+            <button class="element__button-like"></button>
           </article>
           <article class="element">
             <img
@@ -65,7 +65,7 @@
               class="element__photo"
             />
             <h2 class="element__title">Домбай</h2>
-            <img src="./images/like.svg" alt="значок лайка" />
+            <button class="element__button-like"></button>
           </article>
           <article class="element">
             <img
@@ -74,7 +74,7 @@
               class="element__photo"
             />
             <h2 class="element__title">Гора Эльбрус</h2>
-            <img src="./images/like.svg" alt="значок лайка" />
+            <button class="element__button-like"></button>
           </article>
           <article class="element">
             <img
@@ -83,7 +83,7 @@
               class="element__photo"
             />
             <h2 class="element__title">Домбай</h2>
-            <img src="./images/like.svg" alt="значок лайка" />
+            <button class="element__button-like"></button>
           </article>
           <article class="element">
             <img
@@ -92,10 +92,11 @@
               class="element__photo"
             />
             <h2 class="element__title">Карачаево-Черкессия</h2>
-            <img src="./images/like.svg" alt="значок лайка" />
+            <button class="element__button-like"></button>
           </article>
         </section>
       </main>
+
       <footer class="footer">
         <p class="footer__copyright">© 2023 Mesto Russia</p>
       </footer>
@@ -103,20 +104,21 @@
       <!--pop-up-->
       <div class="popup popup_opened">
         <div class="popup__container">
-          <button class="popup__button-close"></button>
+          <button class="popup__button-close hover"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
           <form class="popup__form">
             <input
-              class="popup__text popup__text-name"
+              class="popup__text popup__input-name"
               type="text"
+              name="name"
               placeholder="Жак-Ив Кусто"
             />
             <input
-              class="popup__text popup__text-status"
+              class="popup__text popup__input-status"
               type="text"
+              name="status"
               placeholder="Исследователь океана"
             />
-
             <button class="popup__button-submit" type="submit">
               Сохранить
             </button>
