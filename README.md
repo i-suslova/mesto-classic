@@ -6,7 +6,7 @@
 
 ---
 
-## :star: В работе писпользовались:
+:star: В работе писпользовались:
 
 - Grid Layout
 - flexbox
@@ -17,4 +17,4 @@
 
 ---
 
-## :star: [ссылка на сайт]()
+:star: [ссылка на сайт](https://i-suslova.github.io/mesto /)
