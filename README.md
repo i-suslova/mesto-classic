@@ -17,4 +17,4 @@
 
 ---
 
-:star: [ссылка на сайт](https://i-suslova.github.io/mesto /)
+:star: [ссылка на сайт](https://i-suslova.github.io/mesto)
