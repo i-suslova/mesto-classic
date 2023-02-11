@@ -1,16 +1,16 @@
 .popup__text {
+  width: 358px;
+  min-height: 32px;
   font-size: 14px;
   line-height: 17px;
   color: #000;
-  margin: 0;
-  padding: 0 0 6px;
-  opacity: 0.2;
+  margin: 0 0 22px 0;
   border: none;
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid #00000033;
 }
 
 @media screen and (max-width: 768px) {
   .popup__text {
-    max-width: 238px;
+    width: 238px;
   }
 }

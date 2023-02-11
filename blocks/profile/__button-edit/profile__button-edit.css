@@ -2,7 +2,11 @@
   grid-area: profile__button-edit;
   padding: 0;
   margin: 0;
+  background-image: url(../../../images/VectorEdit.svg);
+  background-size: 10px;
+  background-repeat: no-repeat;
   background-color: #000;
+  background-position: center;
   width: 24px;
   height: 24px;
   border: 1px solid #ffffff;
@@ -10,6 +14,7 @@
 
 @media screen and (max-width: 768px) {
   .profile__button-edit {
+    background-size: 10px;
     width: 18px;
     height: 18px;
   }

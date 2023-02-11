@@ -8,9 +8,10 @@
   text-align: center;
   border-radius: 2px;
   padding: 0;
-  margin-top: 15px;
+  margin: 23px 0 0 2px;
   cursor: pointer;
 }
+
 .popup__button-submit:hover {
   opacity: 0.8;
 }
@@ -18,8 +19,9 @@
 @media screen and (max-width: 768px) {
   .popup__button-submit {
     width: 238px;
+    height: 46px;
     font-size: 14px;
     line-height: 17px;
-    margin-top: 7px;
+    margin: 22px 0 0 2px;
   }
 }
