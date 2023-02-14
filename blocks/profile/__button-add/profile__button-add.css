@@ -2,12 +2,8 @@
   width: 100%;
   max-width: 150px;
   height: 50px;
+  background: #000 url(../../../images/VectorAdd.svg) no-repeat center;
   padding: 0;
-  background-color: #000;
-  background-image: url(../../../images/VectorAdd.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 22px;
   border: 2px solid #ffffff;
   border-radius: 2px;
 }

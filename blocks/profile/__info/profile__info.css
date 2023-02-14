@@ -18,7 +18,7 @@
     margin: 0;
     margin-bottom: 34px;
     grid-template-columns: 20px 1fr 20px auto;
-    grid-template-rows: 39px 18px;
+    grid-template-rows: 40px 18px;
     grid-template-areas:
       ". profile__title  profile__button-edit ."
       ". profile__subtitle . .";

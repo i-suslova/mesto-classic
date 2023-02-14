@@ -9,8 +9,7 @@
 }
 @media screen and (max-width: 768px) {
   .profile__list {
-    display: flex;
     flex-direction: column;
-    gap: 23px;
+    gap: 25px;
   }
 }
