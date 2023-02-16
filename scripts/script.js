@@ -1,24 +1,28 @@
 const buttonEdit = document.querySelector(".profile__button-edit");
 const popup = document.querySelector(".popup");
 const buttonClose = document.querySelector(".popup__button-close");
-let formElement = document.querySelector(".popup__form");
-let nameInput = document.querySelector("#input-name");
-let jobInput = document.querySelector("#input-job");
-let profileTitle = document.querySelector(".profile__title");
-let profileSubtitle = document.querySelector(".profile__subtitle");
+const formElement = document.querySelector(".popup__form");
+const nameInput = document.querySelector("#input-name");
+const jobInput = document.querySelector("#input-job");
+const profileTitle = document.querySelector(".profile__title");
+const profileSubtitle = document.querySelector(".profile__subtitle");
 
-//изменять значения в форме из значений в профиле до открытия попапа
-nameInput.value = "Жак-Ив Кусто";
-jobInput.value = "Исследователь океана";
-
-//открытия попапа, добавляя модификатор
+//замена значения в форме из значений в профиле
+//открытие попапа, добавляя модификатор
 buttonEdit.addEventListener("click", function () {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileSubtitle.textContent;
   popup.classList.add("popup_opened");
 });
 
-//закрытие попапа, удаляя модификатор
+//создаем отдельную именованную функцию закрытия попапа
+function closeFormPopup(element) {
+  element.classList.remove("popup_opened");
+}
+
+//закрытие попапа, используя именованную функцию
 buttonClose.addEventListener("click", function () {
-  popup.classList.remove("popup_opened");
+  closeFormPopup(popup);
 });
 
 // Обработчик «отправки» формы
@@ -27,6 +31,8 @@ function handleFormSubmit(evt) {
 
   profileTitle.textContent = nameInput.value;
   profileSubtitle.textContent = jobInput.value;
+  //закрытие попапа, используя именованную функцию
+  closeFormPopup(popup);
 }
 
 // Прикрепляем обработчик к форме:
