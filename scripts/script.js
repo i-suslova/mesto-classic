@@ -43,30 +43,6 @@ const cloneTemplate = document.querySelector("#template").content.cloneNode(true
 const pictureInput = document.querySelector("#input-picture");
 const linkInput = document.querySelector("#input-link");
 const popupImage = document.querySelector(".popup__image");
-const elementDelete = document.querySelector(".element__button-delete");
-const buttonLike = document.querySelector(".element__button-like");
-
-// for template
-const elements = document.querySelector(".elements");
-
-//обращаемся к массиву initialCards и методом forEach проходим циклом по каждой карточке
-initialCards.forEach(function (initialCard) {
-  // находим по id и клонируем содержимое тега <template>
-  const cloneTemplate = document.querySelector("#template").content.cloneNode(true);
-  //в cloneTemplate находим img
-  const elementPhoto = cloneTemplate.querySelector(".element__photo");
-  elementPhoto.setAttribute("src", initialCard.link);
-  elementPhoto.setAttribute("alt", initialCard.name);
-  //в cloneTemplate находим заголовок
-  const elementTitle = cloneTemplate.querySelector(".element__title");
-  //свойством textContent присвиваем нужное значение
-  elementTitle.textContent = initialCard.name;
-
-  // Вставляем склонированный контент на страницу
-  elements.append(cloneTemplate);
-});
-
-function createCard()
 
 /*//функция создания картинки
 function addPicture(evt) {
@@ -116,6 +92,42 @@ buttonPictureClose.addEventListener("click", function () {
 buttonLike.addEventListener("click", function () {
   buttonLike.classList.toggle("element__button-like_activ");
 });*/
+
+// for template
+const elements = document.querySelector(".elements");
+
+//обращаемся к массиву initialCards и методом forEach проходим циклом по каждой карточке
+
+function createCard(initialCard) {
+  // находим по id и клонируем содержимое тега <template>
+  const cloneTemplate = document.getElementById("template").content.cloneNode(true);
+  //в cloneTemplate находим img
+  const elementPhoto = cloneTemplate.querySelector(".element__photo");
+  elementPhoto.setAttribute("src", initialCard.link);
+  elementPhoto.setAttribute("alt", initialCard.name);
+  //в cloneTemplate находим заголовок
+  const elementTitle = cloneTemplate.querySelector(".element__title");
+  //свойством textContent присвиваем нужное значение
+  elementTitle.textContent = initialCard.name;
+
+  //удаление карточки
+  const buttonDelete = cloneTemplate.querySelector(".element__button-delete");
+  buttonDelete.addEventListener("click", function (element) {
+    const button = element.target;
+    const card = button.closest(".element");
+    card.remove();
+  });
+
+  const buttonLike = cloneTemplate.querySelector(".element__button-like");
+  buttonLike.addEventListener("click", function () {
+    buttonLike.classList.toggle(".element__button-delete");
+  });
+
+  // Вставляем склонированный контент на страницу
+  elements.append(cloneTemplate);
+}
+
+initialCards.forEach(createCard);
 
 // Обработчик «отправки» формы
 function handleFormSubmit(evt) {
