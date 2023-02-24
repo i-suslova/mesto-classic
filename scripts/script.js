@@ -37,25 +37,24 @@ const profileSubtitle = document.querySelector(".profile__subtitle");
 const buttonProfileAdd = document.querySelector(".profile__button-add");
 const popupPicture = document.querySelector(".popup_picture");
 const buttonPictureClose = document.querySelector(".popup__button-close_picture");
-
-const cloneTemplate = document.querySelector("#template").content.cloneNode(true);
-
+const buttonImageClose = document.querySelector(".popup__button-close_image");
+const elements = document.querySelector(".elements");
 const pictureInput = document.querySelector("#input-picture");
 const linkInput = document.querySelector("#input-link");
 const popupImage = document.querySelector(".popup__image");
+const cloneTemplate = document.getElementById("template").content.cloneNode(true);
+const formPicture = document.querySelector(".popup__form-picture");
+const elementPhoto = cloneTemplate.querySelector(".element__photo");
+const elementTitle = cloneTemplate.querySelector(".element__title");
 
-//отдельная именованная функцию открытия попапа
 function openFormPopup(element) {
   element.classList.add("popup_opened");
 }
 
-//отдельная именованная функцию закрытия попапа
 function closeFormPopup(element) {
   element.classList.remove("popup_opened");
 }
 
-//замена значения в форме из значений в профиле
-//открытие попапа-profile, используя именованную функцию
 buttonEdit.addEventListener("click", function () {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileSubtitle.textContent;
@@ -74,29 +73,30 @@ buttonProfileAdd.addEventListener("click", function () {
 
 //закрытие формы для создания карточек, используя именованную функцию
 buttonPictureClose.addEventListener("click", function () {
-  closeFormPopup(popupPicture);
+  c;
 });
-
-// for template
-const elements = document.querySelector(".elements");
 
 //обращаемся к массиву initialCards и методом forEach проходим циклом по каждой карточке
 initialCards.forEach(createCard);
 
 function createCard(initialCard) {
-  // находим по id и клонируем содержимое тега <template>
   const cloneTemplate = document.getElementById("template").content.cloneNode(true);
-  //в cloneTemplate находим img
   const elementPhoto = cloneTemplate.querySelector(".element__photo");
-  elementPhoto.setAttribute("src", initialCard.link);
-  elementPhoto.setAttribute("alt", initialCard.name);
-  //в cloneTemplate находим заголовок
   const elementTitle = cloneTemplate.querySelector(".element__title");
-  //свойством textContent присвиваем нужное значение
-  elementTitle.textContent = initialCard.name;
+  const buttonDelete = cloneTemplate.querySelector(".element__button-delete");
+  const buttonLike = cloneTemplate.querySelector(".element__button-like");
+  const popupImage = document.querySelector(".popup__image");
+  const buttonImageClose = document.querySelector(".popup__button-close_image");
+
+  elementPhoto.addEventListener("click", function () {
+    openFormPopup(popupImage);
+    document.querySelector(".popup__image-photo").src = initialCard.link;
+    document.querySelector(".popup__image-photo").alt = initialCard.name;
+    document.querySelector(".popup__image-text").textContent = initialCard.name;
+  });
+  /*closeFormPopup(popupImage);????*/
 
   //удаление карточки
-  const buttonDelete = cloneTemplate.querySelector(".element__button-delete");
   buttonDelete.addEventListener("click", function (element) {
     const button = element.target;
     const card = button.closest(".element");
@@ -104,18 +104,16 @@ function createCard(initialCard) {
   });
 
   //возможность ставить лайк
-  const buttonLike = cloneTemplate.querySelector(".element__button-like");
   buttonLike.addEventListener("click", function () {
     buttonLike.classList.toggle("element__button-like_activ");
   });
 
-  // Вставляем склонированный контент на страницу
-  elements.append(cloneTemplate);
-}
+  elementPhoto.setAttribute("src", initialCard.link);
+  elementPhoto.setAttribute("alt", initialCard.name);
+  elementTitle.textContent = initialCard.name;
 
-//функция создания картинки
-function addPicture(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+  elements.append(cloneTemplate);
+  return cloneTemplate;
 }
 
 // Обработчик «отправки» формы
@@ -129,6 +127,18 @@ function handleFormSubmit(evt) {
   closeFormPopup(popupProfile);
 }
 
-// Прикрепляем обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
+function pictureFormSubmit(evt) {
+  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+  const name = pictureInput.value;
+  const link = linkInput.value;
+  const card = createCard(name, link);
+  createCard(name, link);
+  closeFormPopup(popupPicture);
+  formPicture.reset();
+  elements.prepend(card);
+
+  closeFormPopup(popupPicture);
+}
+
 formProfile.addEventListener("submit", handleFormSubmit);
+formPicture.addEventListener("submit", pictureFormSubmit);
