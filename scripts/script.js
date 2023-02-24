@@ -44,12 +44,6 @@ const pictureInput = document.querySelector("#input-picture");
 const linkInput = document.querySelector("#input-link");
 const popupImage = document.querySelector(".popup__image");
 
-/*//функция создания картинки
-function addPicture(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-
-}*/
-
 //отдельная именованная функцию открытия попапа
 function openFormPopup(element) {
   element.classList.add("popup_opened");
@@ -78,25 +72,16 @@ buttonProfileAdd.addEventListener("click", function () {
   openFormPopup(popupPicture);
 });
 
-/*//открытие попапа с увеличенной карточкой, используя именованную функцию
-elementPhoto.addEventListener("click", function () {
-  openFormPopup(popupImage);
-});*/
-
 //закрытие формы для создания карточек, используя именованную функцию
 buttonPictureClose.addEventListener("click", function () {
   closeFormPopup(popupPicture);
 });
 
-/*// активность кнопки нравится
-buttonLike.addEventListener("click", function () {
-  buttonLike.classList.toggle("element__button-like_activ");
-});*/
-
 // for template
 const elements = document.querySelector(".elements");
 
 //обращаемся к массиву initialCards и методом forEach проходим циклом по каждой карточке
+initialCards.forEach(createCard);
 
 function createCard(initialCard) {
   // находим по id и клонируем содержимое тега <template>
@@ -118,16 +103,20 @@ function createCard(initialCard) {
     card.remove();
   });
 
+  //возможность ставить лайк
   const buttonLike = cloneTemplate.querySelector(".element__button-like");
   buttonLike.addEventListener("click", function () {
-    buttonLike.classList.toggle(".element__button-delete");
+    buttonLike.classList.toggle("element__button-like_activ");
   });
 
   // Вставляем склонированный контент на страницу
   elements.append(cloneTemplate);
 }
 
-initialCards.forEach(createCard);
+//функция создания картинки
+function addPicture(evt) {
+  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+}
 
 // Обработчик «отправки» формы
 function handleFormSubmit(evt) {
