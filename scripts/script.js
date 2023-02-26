@@ -49,12 +49,12 @@ const linkInput = document.querySelector("#input-link");
 
 //pop-up-с увеличенной карточкой
 const popupImage = document.querySelector(".popup__image");
+const popupImagePhoto = document.querySelector(".popup__image-photo");
+const popupImageText = document.querySelector(".popup__image-text");
 
 //template
 const cloneTemplate = document.getElementById("template").content.cloneNode(true);
 const elements = document.querySelector(".elements");
-const elementPhoto = cloneTemplate.querySelector(".element__photo");
-const elementTitle = cloneTemplate.querySelector(".element__title");
 
 //открытие-закрытие попапов
 function openFormPopup(element) {
@@ -97,7 +97,6 @@ function createCard(name, link) {
   const elementTitle = cloneTemplate.querySelector(".element__title");
   const buttonDelete = cloneTemplate.querySelector(".element__button-delete");
   const buttonLike = cloneTemplate.querySelector(".element__button-like");
-  const popupImage = document.querySelector(".popup__image");
   const buttonImageClose = document.querySelector(".popup__button-close_image");
 
   //создаем карточки на начальный экран из представленного массива
@@ -108,9 +107,9 @@ function createCard(name, link) {
   //создание увеличенной карточки
   elementPhoto.addEventListener("click", function () {
     openFormPopup(popupImage);
-    document.querySelector(".popup__image-photo").src = link;
-    document.querySelector(".popup__image-photo").alt = name;
-    document.querySelector(".popup__image-text").textContent = name;
+    popupImagePhoto.src = link;
+    popupImagePhoto.alt = name;
+    popupImageText.textContent = name;
   });
 
   //закрытие увеличенной карточки
@@ -144,9 +143,9 @@ function handleFormSubmit(evt) {
 }
 
 // Обработчик «отправки» формы для создания карточек
-function pictureFormSubmit(evt) {
+function handlePictureFormSubmit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-
+  const name = pictureInput.value;
   const link = linkInput.value;
   const newCard = createCard(name, link);
   elements.prepend(newCard);
@@ -156,4 +155,4 @@ function pictureFormSubmit(evt) {
 }
 
 formProfile.addEventListener("submit", handleFormSubmit);
-formPicture.addEventListener("submit", pictureFormSubmit);
+formPicture.addEventListener("submit", handlePictureFormSubmit);
