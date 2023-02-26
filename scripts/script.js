@@ -48,7 +48,7 @@ const pictureInput = document.querySelector("#input-picture");
 const linkInput = document.querySelector("#input-link");
 
 //pop-up-с увеличенной карточкой
-const popupImage = document.querySelector(".popup__image");
+const popupImage = document.querySelector(".popup_image");
 const popupImagePhoto = document.querySelector(".popup__image-photo");
 const popupImageText = document.querySelector(".popup__image-text");
 
