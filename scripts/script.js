@@ -32,6 +32,7 @@ const buttonProfileAdd = document.querySelector(".profile__button-add");
 const buttonProfileClose = document.querySelector(".popup__button-close_profile");
 const buttonPictureClose = document.querySelector(".popup__button-close_picture");
 const buttonImageClose = document.querySelector(".popup__button-close_image");
+const closeAllButton = document.querySelectorAll(".popup__button-close");
 
 //pop-up-profile
 const popupProfile = document.querySelector(".popup_profile");
@@ -71,18 +72,17 @@ buttonEdit.addEventListener("click", function () {
   openFormPopup(popupProfile);
 });
 
-buttonProfileClose.addEventListener("click", function () {
-  closeFormPopup(popupProfile);
+//универсальный обработчик крестиков
+closeAllButton.forEach(function (button) {
+  const popup = button.closest(".popup");
+  button.addEventListener("click", function () {
+    closeFormPopup(popup);
+  });
 });
 
 //открытие формы для создания карточек, используя именованную функцию
 buttonProfileAdd.addEventListener("click", function () {
   openFormPopup(popupPicture);
-});
-
-//закрытие формы для создания карточек, используя именованную функцию
-buttonPictureClose.addEventListener("click", function () {
-  closeFormPopup(popupPicture);
 });
 
 //обращаемся к массиву initialCards и методом forEach проходим циклом по каждой карточке
@@ -110,11 +110,6 @@ function createCard(name, link) {
     popupImagePhoto.src = link;
     popupImagePhoto.alt = name;
     popupImageText.textContent = name;
-  });
-
-  //закрытие увеличенной карточки
-  buttonImageClose.addEventListener("click", function () {
-    closeFormPopup(popupImage);
   });
 
   //удаление карточки
