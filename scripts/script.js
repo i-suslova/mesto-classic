@@ -54,8 +54,8 @@ const popupImagePhoto = document.querySelector(".popup__image-photo");
 const popupImageText = document.querySelector(".popup__image-text");
 
 //template
-const cloneTemplate = document.getElementById("template").content.cloneNode(true);
 const elements = document.querySelector(".elements");
+const template = document.getElementById("template").content;
 
 //открытие-закрытие попапов
 function openFormPopup(element) {
@@ -92,12 +92,11 @@ initialCards.forEach(function (element) {
 });
 
 function createCard(name, link) {
-  const cloneTemplate = document.getElementById("template").content.cloneNode(true);
+  const cloneTemplate = template.querySelector(".element").cloneNode(true);
   const elementPhoto = cloneTemplate.querySelector(".element__photo");
   const elementTitle = cloneTemplate.querySelector(".element__title");
   const buttonDelete = cloneTemplate.querySelector(".element__button-delete");
   const buttonLike = cloneTemplate.querySelector(".element__button-like");
-  const buttonImageClose = document.querySelector(".popup__button-close_image");
 
   //создаем карточки на начальный экран из представленного массива
   elementPhoto.setAttribute("src", link);
