@@ -32,6 +32,7 @@ const buttonProfileAdd = document.querySelector(".profile__button-add");
 const buttonProfileClose = document.querySelector(".popup__button-close_profile");
 const buttonPictureClose = document.querySelector(".popup__button-close_picture");
 const buttonImageClose = document.querySelector(".popup__button-close_image");
+const closeAllButton = document.querySelectorAll(".popup__button-close");
 
 //pop-up-profile
 const popupProfile = document.querySelector(".popup_profile");
@@ -53,8 +54,8 @@ const popupImagePhoto = document.querySelector(".popup__image-photo");
 const popupImageText = document.querySelector(".popup__image-text");
 
 //template
-const cloneTemplate = document.getElementById("template").content.cloneNode(true);
 const elements = document.querySelector(".elements");
+const template = document.getElementById("template").content;
 
 //открытие-закрытие попапов
 function openFormPopup(element) {
@@ -71,18 +72,17 @@ buttonEdit.addEventListener("click", function () {
   openFormPopup(popupProfile);
 });
 
-buttonProfileClose.addEventListener("click", function () {
-  closeFormPopup(popupProfile);
+//универсальный обработчик крестиков
+closeAllButton.forEach(function (button) {
+  const popup = button.closest(".popup");
+  button.addEventListener("click", function () {
+    closeFormPopup(popup);
+  });
 });
 
 //открытие формы для создания карточек, используя именованную функцию
 buttonProfileAdd.addEventListener("click", function () {
   openFormPopup(popupPicture);
-});
-
-//закрытие формы для создания карточек, используя именованную функцию
-buttonPictureClose.addEventListener("click", function () {
-  closeFormPopup(popupPicture);
 });
 
 //обращаемся к массиву initialCards и методом forEach проходим циклом по каждой карточке
@@ -92,12 +92,11 @@ initialCards.forEach(function (element) {
 });
 
 function createCard(name, link) {
-  const cloneTemplate = document.getElementById("template").content.cloneNode(true);
+  const cloneTemplate = template.querySelector(".element").cloneNode(true);
   const elementPhoto = cloneTemplate.querySelector(".element__photo");
   const elementTitle = cloneTemplate.querySelector(".element__title");
   const buttonDelete = cloneTemplate.querySelector(".element__button-delete");
   const buttonLike = cloneTemplate.querySelector(".element__button-like");
-  const buttonImageClose = document.querySelector(".popup__button-close_image");
 
   //создаем карточки на начальный экран из представленного массива
   elementPhoto.setAttribute("src", link);
@@ -110,11 +109,6 @@ function createCard(name, link) {
     popupImagePhoto.src = link;
     popupImagePhoto.alt = name;
     popupImageText.textContent = name;
-  });
-
-  //закрытие увеличенной карточки
-  buttonImageClose.addEventListener("click", function () {
-    closeFormPopup(popupImage);
   });
 
   //удаление карточки
