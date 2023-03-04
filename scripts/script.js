@@ -33,6 +33,7 @@ const buttonProfileClose = document.querySelector(".popup__button-close_profile"
 const buttonPictureClose = document.querySelector(".popup__button-close_picture");
 const buttonImageClose = document.querySelector(".popup__button-close_image");
 const closeAllButton = document.querySelectorAll(".popup__button-close");
+const closeOverlay = document.querySelectorAll(".popup");
 
 //pop-up-profile
 const popupProfile = document.querySelector(".popup_profile");
@@ -73,10 +74,27 @@ buttonEdit.addEventListener("click", function () {
 });
 
 //универсальный обработчик крестиков
-closeAllButton.forEach(function (button) {
+closeAllButton.forEach((button) => {
   const popup = button.closest(".popup");
-  button.addEventListener("click", function () {
+  button.addEventListener("click", () => closeFormPopup(popup));
+});
+
+//Закрытие попапа кликом на оверлей
+closeOverlay.forEach((evt) => {
+  const popup = evt.closest(".popup");
+  evt.addEventListener("click", (evt) => {
+    if (evt.target !== evt.currentTarget) return;
     closeFormPopup(popup);
+  });
+});
+
+//Закрытие попапа нажатием на Esc
+closeOverlay.forEach((evt) => {
+  const popup = evt.closest(".popup");
+  document.addEventListener("keydown", (evt) => {
+    if (evt.key === "Escape") {
+      closeFormPopup(popup);
+    }
   });
 });
 
