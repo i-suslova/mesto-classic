@@ -1,21 +1,23 @@
-.popup__text {
+.popup__input {
+  position: relative;
   width: 358px;
   height: 27px;
   font-size: 14px;
   line-height: 17px;
   color: #000;
-  margin: 0;
   padding: 0;
-  margin-bottom: 29px;
+  padding-bottom: 5px;
   border: none;
   border-bottom: 1px solid #00000033;
+  outline: none;
+}
+
+.popup__input::placeholder {
+  color: #c4c4c4;
 }
 
 @media screen and (max-width: 768px) {
-  .popup__text {
+  .popup__input {
     width: 238px;
   }
 }
-
-/*color: #C4C4C4;
-color: #000000;*/
