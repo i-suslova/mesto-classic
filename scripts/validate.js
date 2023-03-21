@@ -69,13 +69,18 @@ const setEventListeners = (formElement) => {
 
   // вызов функции toggleButtonState до ввода данных в поля,
   // для недоступного состояния кнопки при загрузке страницы
-  toggleButtonState(inputList, buttonElement);
+  toggleButtonState(inputList, buttonElement, disableButton);
+
+  // обработчик reset для деактивации кнопки
+  formElement.addEventListener("reset", () => {
+    disableButton(buttonElement, config);
+  });
 
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", () => {
       checkInputValidity(formElement, inputElement);
       // вызов функции toggleButtonState и передадим ей массив полей и кнопку
-      toggleButtonState(inputList, buttonElement);
+      toggleButtonState(inputList, buttonElement, disableButton);
     });
   });
 };

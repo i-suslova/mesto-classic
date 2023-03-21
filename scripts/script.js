@@ -27,17 +27,17 @@ const initialCards = [
 ];
 
 //кнопки
-const buttonEdit = document.querySelector(".profile__button-edit");
-const buttonProfileAdd = document.querySelector(".profile__button-add");
-const buttonProfileClose = document.querySelector(".popup__button-close_profile");
-const buttonPictureClose = document.querySelector(".popup__button-close_picture");
-const buttonImageClose = document.querySelector(".popup__button-close_image");
-const closeAllButton = document.querySelectorAll(".popup__button-close");
-const closeOverlay = document.querySelectorAll(".popup");
+const profileEditButton = document.querySelector(".profile__button-edit");
+const profileAddButton = document.querySelector(".profile__button-add");
+const profileCloseButton = document.querySelector(".popup__button-close_profile");
+const pictureCloseButton = document.querySelector(".popup__button-close_picture");
+const imageCloseButton = document.querySelector(".popup__button-close_image");
+const closeAllButtons = document.querySelectorAll(".popup__button-close");
+const popupList = document.querySelectorAll(".popup");
 
 //pop-up-profile
 const popupProfile = document.querySelector(".popup_profile");
-const formProfile = document.querySelector(".popup__form-profile");
+const profileForm = document.forms["form-profile"];
 const nameInput = document.querySelector("#input-name");
 const jobInput = document.querySelector("#input-job");
 const profileTitle = document.querySelector(".profile__title");
@@ -45,7 +45,7 @@ const profileSubtitle = document.querySelector(".profile__subtitle");
 
 //pop-up-формы для создания карточек
 const popupPicture = document.querySelector(".popup_picture");
-const formPicture = document.querySelector(".popup__form-picture");
+const formPicture = document.forms["form-picture"];
 const pictureInput = document.querySelector("#input-picture");
 const linkInput = document.querySelector("#input-link");
 
@@ -59,48 +59,50 @@ const elements = document.querySelector(".elements");
 const template = document.getElementById("template").content;
 
 //открытие-закрытие попапов
-function openFormPopup(element) {
+function openPopup(element) {
   element.classList.add("popup_opened");
+  document.addEventListener("keydown", closeByEscape);
 }
 
-function closeFormPopup(element) {
+function closePopup(element) {
   element.classList.remove("popup_opened");
+  document.removeEventListener("keydown", closeByEscape);
 }
 
-buttonEdit.addEventListener("click", function () {
+profileEditButton.addEventListener("click", function () {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileSubtitle.textContent;
-  openFormPopup(popupProfile);
-});
-
-//универсальный обработчик крестиков
-closeAllButton.forEach((button) => {
-  const popup = button.closest(".popup");
-  button.addEventListener("click", () => closeFormPopup(popup));
-});
-
-//Закрытие попапа кликом на оверлей
-closeOverlay.forEach((evt) => {
-  const popup = evt.closest(".popup");
-  evt.addEventListener("click", (evt) => {
-    if (evt.target !== evt.currentTarget) return;
-    closeFormPopup(popup);
-  });
+  openPopup(popupProfile);
 });
 
 //Закрытие попапа нажатием на Esc
-closeOverlay.forEach((evt) => {
-  const popup = evt.closest(".popup");
-  document.addEventListener("keydown", (evt) => {
-    if (evt.key === "Escape") {
-      closeFormPopup(popup);
+const closeByEscape = (evt) => {
+  if (evt.key === "Escape") {
+    //находим открытый попап и закрываем его
+    popupList.forEach((popup) => {
+      if (popup.classList.contains("popup_opened")) {
+        closePopup(popup);
+      }
+    });
+  }
+};
+
+//объединяем обработчики оверлея и крестиков, их закрытие
+popupList.forEach((popup) => {
+  popup.addEventListener("mousedown", (evt) => {
+    //методом contains проверяем наличие CSS класса и при наличии выполняем функцию closePopup
+    if (evt.target.classList.contains("popup_opened")) {
+      closePopup(popup);
+    }
+    if (evt.target.classList.contains("popup__button-close")) {
+      closePopup(popup);
     }
   });
 });
 
 //открытие формы для создания карточек, используя именованную функцию
-buttonProfileAdd.addEventListener("click", function () {
-  openFormPopup(popupPicture);
+profileAddButton.addEventListener("click", function () {
+  openPopup(popupPicture);
 });
 
 //обращаемся к массиву initialCards и методом forEach проходим циклом по каждой карточке
@@ -123,7 +125,7 @@ function createCard(name, link) {
 
   //создание увеличенной карточки
   elementPhoto.addEventListener("click", function () {
-    openFormPopup(popupImage);
+    openPopup(popupImage);
     popupImagePhoto.src = link;
     popupImagePhoto.alt = name;
     popupImageText.textContent = name;
@@ -145,13 +147,13 @@ function createCard(name, link) {
 }
 
 // Обработчик «отправки» формы profile
-function handleFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
 
   profileTitle.textContent = nameInput.value;
   profileSubtitle.textContent = jobInput.value;
 
-  closeFormPopup(popupProfile);
+  closePopup(popupProfile);
 }
 
 // Обработчик «отправки» формы для создания карточек
@@ -162,9 +164,9 @@ function handlePictureFormSubmit(evt) {
   const newCard = createCard(name, link);
   elements.prepend(newCard);
 
-  closeFormPopup(popupPicture);
+  closePopup(popupPicture);
   formPicture.reset();
 }
 
-formProfile.addEventListener("submit", handleFormSubmit);
+profileForm.addEventListener("submit", handleProfileFormSubmit);
 formPicture.addEventListener("submit", handlePictureFormSubmit);
