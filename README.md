@@ -17,4 +17,5 @@
 
 ---
 
+https://media.giphy.com/media/qT3NpahR7tGnOqqjng/giphy.gif
 :star: [ссылка на сайт](https://i-suslova.github.io/mesto)
