@@ -1,3 +1,7 @@
+import Card from "../scripts/Card.js";
+import FormValidator from "./FormValidator.js";
+import { config } from "./constants.js";
+
 // ссылки на картинки
 const initialCards = [
   {
@@ -29,10 +33,6 @@ const initialCards = [
 //кнопки
 const profileEditButton = document.querySelector(".profile__button-edit");
 const profileAddButton = document.querySelector(".profile__button-add");
-const profileCloseButton = document.querySelector(".popup__button-close_profile");
-const pictureCloseButton = document.querySelector(".popup__button-close_picture");
-const imageCloseButton = document.querySelector(".popup__button-close_image");
-const closeAllButtons = document.querySelectorAll(".popup__button-close");
 const popupList = document.querySelectorAll(".popup");
 
 //pop-up-profile
@@ -49,14 +49,10 @@ const formPicture = document.forms["form-picture"];
 const pictureInput = document.querySelector("#input-picture");
 const linkInput = document.querySelector("#input-link");
 
-//pop-up-с увеличенной карточкой
-const popupImage = document.querySelector(".popup_image");
-const popupImagePhoto = document.querySelector(".popup__image-photo");
-const popupImageText = document.querySelector(".popup__image-text");
-
 //template
 const elements = document.querySelector(".elements");
-const template = document.getElementById("template").content;
+
+
 
 //открытие-закрытие попапов
 function openPopup(element) {
@@ -105,51 +101,26 @@ profileAddButton.addEventListener("click", function () {
   openPopup(popupPicture);
 });
 
-//обращаемся к массиву initialCards и методом forEach проходим циклом по каждой карточке
-initialCards.forEach(function (element) {
-  const newCard = createCard(element.name, element.link);
-  elements.append(newCard);
+initialCards.forEach((data) => {
+  const card = new Card(data, "#template");
+  const cardElement = card.generateCard();
+  // Добавляем в DOM
+  document.querySelector(".elements").append(cardElement);
 });
 
-function createCard(name, link) {
-  const cloneTemplate = template.querySelector(".element").cloneNode(true);
-  const elementPhoto = cloneTemplate.querySelector(".element__photo");
-  const elementTitle = cloneTemplate.querySelector(".element__title");
-  const buttonDelete = cloneTemplate.querySelector(".element__button-delete");
-  const buttonLike = cloneTemplate.querySelector(".element__button-like");
+function createCard(evt, data) {
+  evt.preventDefault();
+  const card = new Card(data, "#template");
+  const cardElement = card.generateCard();
 
-  //создаем карточки на начальный экран из представленного массива
-  elementPhoto.setAttribute("src", link);
-  elementPhoto.setAttribute("alt", name);
-  elementTitle.textContent = name;
+  elements.prepend(cardElement);
 
-  //создание увеличенной карточки
-  elementPhoto.addEventListener("click", function () {
-    openPopup(popupImage);
-    popupImagePhoto.src = link;
-    popupImagePhoto.alt = name;
-    popupImageText.textContent = name;
-  });
-
-  //удаление карточки
-  buttonDelete.addEventListener("click", function (element) {
-    const button = element.target;
-    const card = button.closest(".element");
-    card.remove();
-  });
-
-  //возможность ставить лайк
-  buttonLike.addEventListener("click", function () {
-    buttonLike.classList.toggle("element__button-like_activ");
-  });
-
-  return cloneTemplate;
+  closePopup(popupPicture);
+  formPicture.reset();
 }
 
 // Обработчик «отправки» формы profile
-function handleProfileFormSubmit(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-
+function handleProfileFormSubmit() {
   profileTitle.textContent = nameInput.value;
   profileSubtitle.textContent = jobInput.value;
 
@@ -158,15 +129,20 @@ function handleProfileFormSubmit(evt) {
 
 // Обработчик «отправки» формы для создания карточек
 function handlePictureFormSubmit(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  const name = pictureInput.value;
-  const link = linkInput.value;
-  const newCard = createCard(name, link);
-  elements.prepend(newCard);
-
-  closePopup(popupPicture);
-  formPicture.reset();
+  const data = {
+    name: pictureInput.value,
+    link: linkInput.value,
+  };
+  createCard(evt, data);
 }
 
 profileForm.addEventListener("submit", handleProfileFormSubmit);
 formPicture.addEventListener("submit", handlePictureFormSubmit);
+
+
+const formElements = document.querySelectorAll(config.formSelector);
+
+formElements.forEach((formElement) => {
+  const formValidator = new FormValidator(config, formElement);
+  formValidator.enableValidation();
+});
