@@ -52,24 +52,24 @@ const linkInput = document.querySelector("#input-link");
 //template
 const elements = document.querySelector(".elements");
 
+//pop-up-с увеличенной карточкой-
+const popupImage = document.querySelector(".popup_image");
+const popupImagePhoto = popupImage.querySelector(".popup__image-photo");
+const popupImageText = popupImage.querySelector(".popup__image-text");
 
+const profileFormValidator = new FormValidator(config, profileForm);
+const pictureFormValidator = new FormValidator(config, formPicture);
 
 //открытие-закрытие попапов
-function openPopup(element) {
+const openPopup = (element) => {
   element.classList.add("popup_opened");
   document.addEventListener("keydown", closeByEscape);
-}
+};
 
-function closePopup(element) {
+const closePopup = (element) => {
   element.classList.remove("popup_opened");
   document.removeEventListener("keydown", closeByEscape);
-}
-
-profileEditButton.addEventListener("click", function () {
-  nameInput.value = profileTitle.textContent;
-  jobInput.value = profileSubtitle.textContent;
-  openPopup(popupProfile);
-});
+};
 
 //Закрытие попапа нажатием на Esc
 const closeByEscape = (evt) => {
@@ -96,21 +96,28 @@ popupList.forEach((popup) => {
   });
 });
 
-//открытие формы для создания карточек, используя именованную функцию
-profileAddButton.addEventListener("click", function () {
-  openPopup(popupPicture);
-});
+function handleCardClick(name, link) {
+  popupImagePhoto.src = link;
+  popupImagePhoto.alt = name;
+  popupImageText.textContent = name;
+  openPopup(popupImage);
+}
+
+//создание новой карточки
+function getCard(data, templateSelector) {
+  const card = new Card(data, templateSelector, handleCardClick, openPopup);
+  const cardElement = card.generateCard(data);
+  return cardElement;
+}
 
 initialCards.forEach((data) => {
-  const card = new Card(data, "#template");
-  const cardElement = card.generateCard();
-  // Добавляем в DOM
-  document.querySelector(".elements").append(cardElement);
+  const cardElement = getCard(data, "#template");
+  elements.append(cardElement);
 });
 
 function createCard(evt, data) {
   evt.preventDefault();
-  const card = new Card(data, "#template");
+  const card = new Card(data, "#template", openPopup);
   const cardElement = card.generateCard();
 
   elements.prepend(cardElement);
@@ -118,6 +125,19 @@ function createCard(evt, data) {
   closePopup(popupPicture);
   formPicture.reset();
 }
+
+// Открываем попапы с формами
+profileEditButton.addEventListener("click", () => {
+  profileFormValidator.resetValidation(); // Сбрасываем ошибки и состояние кнопки
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileSubtitle.textContent;
+  openPopup(popupProfile);
+});
+
+profileAddButton.addEventListener("click", () => {
+  pictureFormValidator.resetValidation(); // Сбрасываем ошибки и состояние кнопки
+  openPopup(popupPicture);
+});
 
 // Обработчик «отправки» формы profile
 function handleProfileFormSubmit() {
@@ -133,16 +153,39 @@ function handlePictureFormSubmit(evt) {
     name: pictureInput.value,
     link: linkInput.value,
   };
+
   createCard(evt, data);
 }
 
 profileForm.addEventListener("submit", handleProfileFormSubmit);
 formPicture.addEventListener("submit", handlePictureFormSubmit);
 
+// const formElements = document.querySelectorAll(config.formSelector);
 
-const formElements = document.querySelectorAll(config.formSelector);
+const formValidators = {}; // Создаем пустой объект для хранения валидаторов
 
-formElements.forEach((formElement) => {
-  const formValidator = new FormValidator(config, formElement);
-  formValidator.enableValidation();
-});
+// Включение валидации
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(formElement, config);
+    // получаем данные из атрибута `name` у формы
+    const formName = formElement.getAttribute("name");
+
+    // вот тут в объект записываем под именем формы
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(config);
+
+// И теперь можно использовать валидаторы для деактивации кнопки и тд
+
+formValidators[profileForm.getAttribute("name")].resetValidation();
+//formValidators[ formPicture.getAttribute('name') ].resetValidation()
+//
+// formElements.forEach((formElement) => {
+//   const formValidator = new FormValidator(config, formElement);
+//   formValidator.enableValidation();
+// });
