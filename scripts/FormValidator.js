@@ -8,10 +8,13 @@ export default class FormValidator {
     this._errorClass = config.errorClass;
     this._formElement = formElement;
 
+    
+
     this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
 
     this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
   }
+
   //добавляем спан с ошибкой и подчеркиваем красной чертой
   _showInputError(inputElement, errorMessage) {
     const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
@@ -30,17 +33,7 @@ export default class FormValidator {
     errorElement.textContent = "";
   }
 
-  //    resetValidation() {
-  //     this._toggleButtonState();
-
-  //     this._inputList.forEach(inputElement => {
-  //       this._hideInputError(inputElement);
-  //     });
-
-  //  }
-
   resetValidation() {
-    // this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
     this._toggleButtonState();
     this._inputList.forEach((inputElement) => {
       this._hideInputError(inputElement);
@@ -76,7 +69,7 @@ export default class FormValidator {
   };
 
   _toggleButtonState() {
-    if (this._hasInvalidInput(this._inputList)) {
+    if (this._hasInvalidInput()) { //this._inputList
       this._disableButton();
     } else {
       this._enableButton();
@@ -102,6 +95,6 @@ export default class FormValidator {
   }
 
   enableValidation() {
-    this._setEventListeners();
+   this._setEventListeners();
   }
 }

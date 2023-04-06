@@ -29,6 +29,7 @@ const initialCards = [
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
 ];
+console.log("Форма не найдена");
 
 //кнопки
 const profileEditButton = document.querySelector(".profile__button-edit");
@@ -97,29 +98,34 @@ popupList.forEach((popup) => {
 });
 
 function handleCardClick(name, link) {
+  openPopup(popupImage);
   popupImagePhoto.src = link;
   popupImagePhoto.alt = name;
   popupImageText.textContent = name;
-  openPopup(popupImage);
 }
 
 //создание новой карточки
 function getCard(data, templateSelector) {
-  const card = new Card(data, templateSelector, handleCardClick, openPopup);
-  const cardElement = card.generateCard(data);
+  const card = new Card(data, templateSelector, handleCardClick);
+  const cardElement = card.generateCard();
+
   return cardElement;
 }
 
 initialCards.forEach((data) => {
-  const cardElement = getCard(data, "#template");
+  const cardElement = getCard(data, "#template", handleCardClick);
   elements.append(cardElement);
+  const cardImage = cardElement.querySelector(".element__photo");
+
+  cardImage.addEventListener("click", () => {
+    handleCardClick(data.name, data.link);
+  });
 });
 
 function createCard(evt, data) {
   evt.preventDefault();
-  const card = new Card(data, "#template", openPopup);
+  const card = new Card(data, "#template", handleCardClick);
   const cardElement = card.generateCard();
-
   elements.prepend(cardElement);
 
   closePopup(popupPicture);
@@ -160,32 +166,9 @@ function handlePictureFormSubmit(evt) {
 profileForm.addEventListener("submit", handleProfileFormSubmit);
 formPicture.addEventListener("submit", handlePictureFormSubmit);
 
-// const formElements = document.querySelectorAll(config.formSelector);
+const formElements = document.querySelectorAll(config.formSelector);
 
-const formValidators = {}; // Создаем пустой объект для хранения валидаторов
-
-// Включение валидации
-const enableValidation = (config) => {
-  const formList = Array.from(document.querySelectorAll(config.formSelector));
-  formList.forEach((formElement) => {
-    const validator = new FormValidator(formElement, config);
-    // получаем данные из атрибута `name` у формы
-    const formName = formElement.getAttribute("name");
-
-    // вот тут в объект записываем под именем формы
-    formValidators[formName] = validator;
-    validator.enableValidation();
-  });
-};
-
-enableValidation(config);
-
-// И теперь можно использовать валидаторы для деактивации кнопки и тд
-
-formValidators[profileForm.getAttribute("name")].resetValidation();
-//formValidators[ formPicture.getAttribute('name') ].resetValidation()
-//
-// formElements.forEach((formElement) => {
-//   const formValidator = new FormValidator(config, formElement);
-//   formValidator.enableValidation();
-// });
+formElements.forEach((formElement) => {
+  const formValidator = new FormValidator(config, formElement);
+  formValidator.enableValidation();
+});

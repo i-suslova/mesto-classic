@@ -40,7 +40,7 @@ export default class Card {
 
   _setEventListeners() {
     this._image.addEventListener("click", () => {
-      this._handleCardClick(this._name, this._link, this._openPopup);
+      this._handleCardClick(this._name, this._link);
     });
 
     //  удаление карточки
@@ -53,6 +53,7 @@ export default class Card {
       this._handleButtonLike();
     });
   }
+
   _handleButtonDelete() {
     this._element.remove();
   }
