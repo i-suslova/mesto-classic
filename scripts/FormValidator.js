@@ -8,11 +8,10 @@ export default class FormValidator {
     this._errorClass = config.errorClass;
     this._formElement = formElement;
 
-    
-
     this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-
     this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
+
+    this._setEventListeners();
   }
 
   //добавляем спан с ошибкой и подчеркиваем красной чертой
@@ -69,7 +68,7 @@ export default class FormValidator {
   };
 
   _toggleButtonState() {
-    if (this._hasInvalidInput()) { //this._inputList
+    if (this._hasInvalidInput()) {
       this._disableButton();
     } else {
       this._enableButton();
@@ -77,7 +76,13 @@ export default class FormValidator {
   }
 
   _setEventListeners() {
+    // для недоступного состояния кнопки при загрузке страницы
     this._toggleButtonState(this._inputList, this._buttonElement);
+    // обработчик submit для валидации формы
+    this._formElement.addEventListener("submit", (event) => {
+      event.preventDefault();
+    });
+    // обработчик reset для деактивации кнопки
     this._formElement.addEventListener("reset", () => {
       this._disableButton(); // используем сохраненный элемент кнопки
     });
@@ -87,14 +92,10 @@ export default class FormValidator {
         this._checkInputValidity(inputElement);
         this._toggleButtonState(this._inputList, this._buttonElement);
       });
-
-      this._formElement.addEventListener("submit", (event) => {
-        event.preventDefault();
-      });
     });
   }
 
   enableValidation() {
-   this._setEventListeners();
+    this._setEventListeners();
   }
 }
