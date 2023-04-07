@@ -113,19 +113,15 @@ function getCard(data, templateSelector) {
 }
 
 initialCards.forEach((data) => {
-  const cardElement = getCard(data, "#template", handleCardClick);
+  const cardElement = getCard(data, "#template");
   elements.append(cardElement);
-  const cardImage = cardElement.querySelector(".element__photo");
-
-  cardImage.addEventListener("click", () => {
-    handleCardClick(data.name, data.link);
-  });
 });
 
 function createCard(evt, data) {
   evt.preventDefault();
-  const card = new Card(data, "#template", handleCardClick);
-  const cardElement = card.generateCard();
+  //  функция createCard вызывает функцию getCard,
+  //для создания новой карточки, используя переданные данные
+  const cardElement = getCard(data, "#template");
   elements.prepend(cardElement);
 
   closePopup(popupPicture);
@@ -166,9 +162,4 @@ function handlePictureFormSubmit(evt) {
 profileForm.addEventListener("submit", handleProfileFormSubmit);
 formPicture.addEventListener("submit", handlePictureFormSubmit);
 
-const formElements = document.querySelectorAll(config.formSelector);
 
-formElements.forEach((formElement) => {
-  const formValidator = new FormValidator(config, formElement);
-  formValidator.enableValidation();
-});
