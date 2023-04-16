@@ -4,7 +4,7 @@
   height: 50px;
   background: #000 url(../../../images/VectorAdd.svg) no-repeat center;
   padding: 0;
-  border: 2px solid #ffffff;
+  border: 2px solid red;/*#ffffff;*/
   border-radius: 2px;
 }
 
